@@ -13,7 +13,7 @@ bash train.sh
 
 ## Test
 
-Run the test script with <MODEL PATH>, e.g. 'logs/saved_models/pitts30k-vgg16/conv5-sare_ind-lr0.001-tuple1/model_best.pth.tar'
+Run the test script with `<MODEL PATH>`, e.g. 'logs/saved_models/pitts30k-vgg16/conv5-sare_ind-lr0.001-tuple1/model_best.pth.tar'
 
 ```shell
 bash test.sh <MODEL PATH>
