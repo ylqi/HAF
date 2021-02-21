@@ -39,7 +39,7 @@ class VGG(nn.Module):
         self.branch_m_dim = 64
         self.branch_h_dim = 64
 
-        self.feature_dim = self.branch_dim*3
+        self.feature_dim = self.branch_1_dim + self.branch_m_dim + self.branch_h_dim
         self.log_dir = log_dir
         # Construct base (pretrained) resnet
         if depth not in VGG.__factory:
@@ -53,17 +53,17 @@ class VGG(nn.Module):
         self.conv_1=nn.Sequential(
             lower_branch,
             nn.UpsamplingNearest2d(scale_factor=2),
-            nn.Conv2d(256, self.branch_dim, kernel_size=1)
+            nn.Conv2d(256, self.branch_1_dim, kernel_size=1)
         )
         self.conv_m=nn.Sequential(
             middle_branch,
             nn.UpsamplingNearest2d(scale_factor=4),
-            nn.Conv2d(512, self.branch_dim, kernel_size=1) 
+            nn.Conv2d(512, self.branch_m_dim, kernel_size=1) 
         )
         self.conv_h=nn.Sequential(
             higher_branch,
             nn.UpsamplingNearest2d(scale_factor=8),
-            nn.Conv2d(512, self.branch_dim, kernel_size=1) 
+            nn.Conv2d(512, self.branch_m_dim, kernel_size=1) 
         )
 
         self.gap = nn.AdaptiveMaxPool2d(1)
