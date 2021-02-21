@@ -26,4 +26,4 @@ netvlad_img.py --launcher pytorch --tcp-port ${PORT} \
   --width 640 --height 480 --tuple-size 1 -j 2 --neg-num 4 --test-batch-size 4 \
   --margin 0.1 --lr ${LR} --weight-decay 0.001 --loss-type ${LOSS} \
   --eval-step 1 --epochs 5 --step-size 5 --cache-size 1000 \
-  --logs-dir logs/netVLAD/${DATASET}${SCALE}-${ARCH}/${LAYERS}-${LOSS}-lr${LR}-tuple${GPUS}
+  --logs-dir logs/saved_models/${DATASET}${SCALE}-${ARCH}/${LAYERS}-${LOSS}-lr${LR}-tuple${GPUS}

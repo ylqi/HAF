@@ -11,4 +11,10 @@ The default scripts adopt 4 GPUs (require ~11G per GPU) for training, where each
 bash train.sh
 ```
 
+## Test
 
+Run the test script with <MODEL PATH>, e.g. 'logs/saved_models/pitts30k-vgg16/conv5-sare_ind-lr0.001-tuple1/model_best.pth.tar'
+
+```shell
+bash test.sh <MODEL PATH>
+```
