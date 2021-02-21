@@ -81,7 +81,7 @@ logs
 
 **(1) Architecture-pretrained weights for VGG16 backbone**
 
-Our VGG16-based feature extraction layers is pretrained on [Architecture dataset](https://www.kaggle.com/wwymak/architecture-dataset). Directly download the [small-model weights(for one V100 GPU)](https://drive.google.com/drive/folders/1eOe8WOFi-X6aue2mbTcnj0A08bGBplVq?usp=sharing), middle-model weights or large-model weights(the one in paper) from Google Drive, and save them under the path of `logs/`.
+Our VGG16-based feature extraction layers is pretrained on [Architecture dataset](https://www.kaggle.com/wwymak/architecture-dataset). Directly download the [small-model weights(for one V100 GPU)](https://drive.google.com/drive/folders/1eOe8WOFi-X6aue2mbTcnj0A08bGBplVq?usp=sharing), middle-model weights or large-model weights(the proposed one in paper) from Google Drive, and save them under the path of `logs/`.
 
 **(2) initial cluster centers for VLAD layer**
 
