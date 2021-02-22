@@ -225,5 +225,5 @@ ENV/
 
 
 # Project specific
-data
-logs
+/data
+/logs
