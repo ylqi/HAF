@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
 
-setup(name='DenserNet',
+setup(name='HAF',
       version='0.1.0',
       description='Open-source toolbox for Image-based Localization (Place Recognition)',
-      author_email='liu2538@purdue.edu',
-      url='https://github.com/goodproj13/DenserNet',
+      author_email='yanliqi@westlake.edu.cn',
+      url='https://github.com/YanLiqi/HAF',
       license='MIT',
       install_requires=[
           'numpy', 'torch', 'torchvision',
