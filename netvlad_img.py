@@ -86,7 +86,7 @@ def update_sampler(sampler, model, loader, query, gallery, sub_set, vlad=True, g
     del distmat
 
 def get_model(args):
-    base_model = models.create(args.arch, log_dir="logs")
+    base_model = models.create(args.arch, log_dir="logs", branch_1_dim=args.branch_1_dim, branch_m_dim=args.branch_m_dim, branch_h_dim=args.branch_h_dim)
     if args.vlad:
         pool_layer = models.create('netvlad', dim=base_model.feature_dim)
         initcache = osp.join(args.init_dir, args.arch + '_' + args.dataset + '_' + str(args.num_clusters) + '_desc_cen.hdf5')
@@ -204,7 +204,7 @@ def main_worker(args):
                     'state_dict': model.state_dict(),
                     'epoch': epoch,
                     'best_recall5': best_recall5,
-                }, is_best, fpath=osp.join(args.logs_dir, 'checkpoint'+str(epoch)+'.pth.tar'))
+                }, is_best, fpath=osp.join(args.logs_dir, 'checkpoint'+str(epoch)+'.pth'))
                 print('\n * Finished epoch {:3d} recall@1: {:5.1%}  recall@5: {:5.1%}  recall@10: {:5.1%}  best@5: {:5.1%}{}\n'.
                       format(epoch, recalls[0], recalls[1], recalls[2], best_recall5, ' *' if is_best else ''))
 
@@ -214,7 +214,7 @@ def main_worker(args):
     # final inference
     if (args.rank==0):
         print("Performing PCA reduction on the best model:")
-    model.load_state_dict(load_checkpoint(osp.join(args.logs_dir, 'model_best.pth.tar'))['state_dict'])
+    model.load_state_dict(load_checkpoint(osp.join(args.logs_dir, 'model_best.pth'))['state_dict'])
     pca_parameters_path = osp.join(args.logs_dir, 'pca_params_model_best.h5')
     pca = PCA(args.features, (not args.nowhiten), pca_parameters_path)
     dict_f = extract_features(model, train_extract_loader, sorted(list(set(dataset.q_train) | set(dataset.db_train))),
@@ -266,6 +266,11 @@ if __name__ == '__main__':
     parser.add_argument('--syncbn', action='store_true')
     parser.add_argument('--sync-gather', action='store_true')
     parser.add_argument('--features', type=int, default=4096)
+
+    parser.add_argument('--branch-1-dim', type=int, default=64)
+    parser.add_argument('--branch-m-dim', type=int, default=64)
+    parser.add_argument('--branch-h-dim', type=int, default=64)
+
     # optimizer
     parser.add_argument('--lr', type=float, default=0.001,
                         help="learning rate of new parameters, for pretrained ")

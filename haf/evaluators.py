@@ -51,7 +51,7 @@ def extract_features(model, data_loader, dataset, print_freq=10,
 
     end = time.time()
     with torch.no_grad():
-        for i, (imgs, fnames, _, _, _) in tqdm(enumerate(data_loader), desc="Extract Features"):
+        for i, (imgs, fnames, _, _, _) in enumerate(tqdm(data_loader, desc="Extract Features (GPU-%d)" % gpu)):
             data_time.update(time.time() - end)
 
             outputs = extract_cnn_feature(model, imgs, vlad, gpu=gpu)
@@ -188,6 +188,7 @@ class Evaluator(object):
             features = extract_features(self.model, query_loader, dataset,
                             vlad=vlad, pca=pca, gpu=gpu, sync_gather=sync_gather)
 
+        print(features)
         distmat, _, _ = pairwise_distance(features, query, gallery)
         recalls = evaluate_all(distmat, ground_truth, gallery, nms=nms)
         if (not rerank):

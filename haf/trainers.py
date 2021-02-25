@@ -7,6 +7,7 @@ from torch.nn import functional as F
 import torch.distributed as dist
 
 from .utils.meters import AverageMeter
+from tqdm import tqdm
 
 class Trainer(object):
     #############################
@@ -32,7 +33,7 @@ class Trainer(object):
 
         data_loader.new_epoch()
 
-        for i in range(train_iters):
+        for i in tqdm(range(train_iters), desc="Epoch: [%d-%d] (GPU-%d)" % (epoch, sub_id, self.gpu)):
             inputs = self._parse_data(data_loader.next())
             data_time.update(time.time() - end)
 
@@ -50,15 +51,15 @@ class Trainer(object):
                 rank = dist.get_rank()
             except:
                 rank = 0
-            if ((i + 1) % print_freq == 0 and rank==0):
-                print('Epoch: [{}-{}][{}/{}]\t'
-                      'Time {:.3f} ({:.3f})\t'
-                      'Data {:.3f} ({:.3f})\t'
-                      'Loss {:.3f} ({:.3f})'
-                      .format(epoch, sub_id, i + 1, train_iters,
-                              batch_time.val, batch_time.avg,
-                              data_time.val, data_time.avg,
-                              losses.val, losses.avg))
+            # if ((i + 1) % print_freq == 0 and rank==0):
+            #     print('Epoch: [{}-{}][{}/{}]\t'
+            #           'Time {:.3f} ({:.3f})\t'
+            #           'Data {:.3f} ({:.3f})\t'
+            #           'Loss {:.3f} ({:.3f})'
+            #           .format(epoch, sub_id, i + 1, train_iters,
+            #                   batch_time.val, batch_time.avg,
+            #                   data_time.val, data_time.avg,
+            #                   losses.val, losses.avg))
 
 
     def _parse_data(self, inputs):

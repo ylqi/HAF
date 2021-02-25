@@ -7,7 +7,7 @@
 ## Introduction
 
 `HAF` extracts the multi-scale feature maps from a convolutional neural network (CNN) to perform hierarchical attention fusion for image representations. This repo is the PyTorch implementation of ICASSP2021 paper "HIERARCHICAL ATTENTION FUSION FOR GEO-LOCALIZATION"
- [[pdf](https://arxiv.org/abs/2012.02366)] 
+ [[pdf](https://arxiv.org/abs/2102.09186)] 
 
 ## Installation
 
@@ -22,8 +22,8 @@ Please find details [Here](docs/REPRODUCTION.md) for step-by-step instructions.
 Please refer to [Here](docs/MODEL_ZOO.md) for trained models.
 
 ## Inference on a single image 
-python inference.py
 
+Please refer to [Here](docs/INFERENCE.md) for inference on a single image.
 
 ## Train on customized dataset
 Please refer to [Here](docs/INSTALL.md#use-custom-dataset-optional) to prepare your own dataset.

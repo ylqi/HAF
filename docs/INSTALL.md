@@ -9,7 +9,7 @@ python setup.py develop # OR python setup.py install
 
 ### Datasets
 
-Currently, we support [Pittsburgh](https://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Torii_Visual_Place_Recognition_2013_CVPR_paper.pdf), [Tokyo 24/7](https://www.di.ens.fr/~josef/publications/Torii15.pdf) and [Tokyo Time Machine](https://arxiv.org/abs/1511.07247) datasets. The access of the above datasets can be found [here](https://www.di.ens.fr/willow/research/netvlad/).
+[Pittsburgh](https://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Torii_Visual_Place_Recognition_2013_CVPR_paper.pdf), [Tokyo 24/7](https://www.di.ens.fr/~josef/publications/Torii15.pdf) and [Tokyo Time Machine](https://arxiv.org/abs/1511.07247) datasets can be found [HERE](https://data.ciirc.cvut.cz/public/projects/2015netVLAD/). The associated .mat files are available [HERE](https://www.di.ens.fr/willow/research/netvlad/data/netvlad_v100_datasets.tar.gz).
 
 ```shell
 mkdir data
@@ -73,15 +73,27 @@ mkdir logs && cd logs
 After preparing the pre-trained weights, the file tree should be
 ```shell
 logs
-├── haf_vgg16_conv_1_dim-[64/128/384].pth.pth # refer to (1)
-├── haf_vgg16_conv_m_dim-[64/128/256].pth.pth # refer to (1)
-├── haf_vgg16_conv_h_dim-[64/128/512].pth.pth # refer to (1)
+├── haf_vgg16_conv_1_dim-[64/128/384].pth # refer to (1)
+├── haf_vgg16_conv_m_dim-[64/128/256].pth # refer to (1)
+├── haf_vgg16_conv_h_dim-[64/128/512].pth # refer to (1)
 └── vgg16_pitts_64_desc_cen.hdf5 # refer to (2)
 ```
 
 **(1) Architecture-pretrained weights for VGG16 backbone**
 
-Our VGG16-based feature extraction layers is pretrained on [Architecture dataset](https://www.kaggle.com/wwymak/architecture-dataset). Directly download the [small-model weights (for one V100 GPU)](https://drive.google.com/drive/folders/1eOe8WOFi-X6aue2mbTcnj0A08bGBplVq?usp=sharing), middle-model weights or large-model weights (the proposed one in paper) from Google Drive, and save them under the path of `logs/`.
+Our VGG16-based feature extraction layers is pretrained on [Architecture dataset](https://www.kaggle.com/wwymak/architecture-dataset). Directly download from [Google Drive](https://drive.google.com/drive/folders/1kLFRRqPtcB62h5wIoYWnPqMUU9Lt2ume?usp=sharing), and save them under the path of `logs/`.
+
+Or you can train the feature branch by running the `Feature_branch.py` (You should download the [Architecture dataset](https://www.kaggle.com/wwymak/architecture-dataset) and put them under the path of `Arch_test` and `Arch_train`):
+```shell
+# for small model (for one V100 GPU)
+python Feature_branch.py 64 64 64
+
+# for middle model (for both efficiency and performance)
+python Feature_branch.py 128 128 128
+
+# for large model (the proposed one in paper)
+python Feature_branch.py 384 256 512
+```
 
 **(2) initial cluster centers for VLAD layer**
 

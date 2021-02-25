@@ -227,3 +227,5 @@ ENV/
 # Project specific
 /data
 /logs
+/result
+/pretrained_model

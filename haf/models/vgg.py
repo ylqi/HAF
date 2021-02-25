@@ -28,16 +28,16 @@ class VGG(nn.Module):
     }
 
     def __init__(self, depth, pretrained=True, cut_at_pooling=False,
-                    train_layers='conv5', log_dir=None):
+                    train_layers='conv5', log_dir=None, branch_1_dim=64, branch_m_dim=64, branch_h_dim=64):
         super(VGG, self).__init__()
         self.pretrained = pretrained
         self.depth = depth
         self.cut_at_pooling = cut_at_pooling
         self.train_layers = train_layers
 
-        self.branch_1_dim = 64
-        self.branch_m_dim = 64
-        self.branch_h_dim = 64
+        self.branch_1_dim = branch_1_dim
+        self.branch_m_dim = branch_m_dim
+        self.branch_h_dim = branch_h_dim
 
         self.feature_dim = self.branch_1_dim + self.branch_m_dim + self.branch_h_dim
         self.log_dir = log_dir
@@ -80,12 +80,12 @@ class VGG(nn.Module):
             for param in higher_branch.parameters():
                 param.requires_grad = False
 
-            for param in self.conv_1.parameters():
-                param.requires_grad = False
-            for param in self.conv_m.parameters():
-                param.requires_grad = False
-            for param in self.conv_h.parameters():
-                param.requires_grad = False
+            # for param in self.conv_1.parameters():
+            #     param.requires_grad = False
+            # for param in self.conv_m.parameters():
+            #     param.requires_grad = False
+            # for param in self.conv_h.parameters():
+            #     param.requires_grad = False
 
 
     def _init_params(self):
