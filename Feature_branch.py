@@ -104,9 +104,9 @@ class_head
 conv_1_dim = int(sys.argv[1])
 conv_m_dim = int(sys.argv[2])
 conv_h_dim = int(sys.argv[3])
-class Denser_Net(nn.Module):
+class HAF(nn.Module):
   def __init__(self,K,h_b,m_b,l_b):
-    super(Denser_Net,self).__init__()
+    super(HAF,self).__init__()
     ### add batch norm
     self.conv_1=nn.Sequential(
         lower_branch,
@@ -152,32 +152,17 @@ class Denser_Net(nn.Module):
 # In[7]:
 
 
-denser_net = Denser_Net(lower_branch,middle_branch,higher_branch,K)
+haf = HAF(lower_branch,middle_branch,higher_branch,K)
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
-denser_net.to(device)
-
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# denser_net = denser_net.cuda()
-# device_ids = [0, 1, 2, 3]
-# denser_net = torch.nn.DataParallel(denser_net, device_ids=device_ids)
-
-# torch.cuda.get_device_name(1),torch.cuda.device_count(),torch.cuda.current_device()
-
-
-# In[8]:
-
-
-# from torchsummary import summary
-# summary(denser_net, (3, 128, 128))
-
+haf.to(device)
 
 # In[9]:
 
 
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, denser_net.parameters()), lr=0.0001,     betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-5)
+optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, haf.parameters()), lr=0.0001,     betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-5)
 
 
 # In[10]:
@@ -252,12 +237,9 @@ def batch_gd(model, criterion, optimizer, train_loader, test_loader, epochs):
     
     # torch.save(model.state_dict(), os.path.join(weight_save_path, "model_%d.pth" % (it+1)))
     if test_acc > best_test_acc:
-      # torch.save(model.module.conv_1.state_dict(), os.path.join(weight_save_root, "densernet_vgg16_conv_1_dim-%d.pth" % conv_1_dim))
-      # torch.save(model.module.conv_m.state_dict(), os.path.join(weight_save_root, "densernet_vgg16_conv_m_dim-%d.pth" % conv_m_dim))
-      # torch.save(model.module.conv_h.state_dict(), os.path.join(weight_save_root, "densernet_vgg16_conv_h_dim-%d.pth" % conv_h_dim))
-      torch.save(model.conv_1.state_dict(), os.path.join(weight_save_root, "densernet_vgg16_conv_1_dim-%d.pth" % conv_1_dim))
-      torch.save(model.conv_m.state_dict(), os.path.join(weight_save_root, "densernet_vgg16_conv_m_dim-%d.pth" % conv_m_dim))
-      torch.save(model.conv_h.state_dict(), os.path.join(weight_save_root, "densernet_vgg16_conv_h_dim-%d.pth" % conv_h_dim))
+      torch.save(model.conv_1.state_dict(), os.path.join(weight_save_root, "haf_vgg16_conv_1_dim-%d.pth" % conv_1_dim))
+      torch.save(model.conv_m.state_dict(), os.path.join(weight_save_root, "haf_vgg16_conv_m_dim-%d.pth" % conv_m_dim))
+      torch.save(model.conv_h.state_dict(), os.path.join(weight_save_root, "haf_vgg16_conv_h_dim-%d.pth" % conv_h_dim))
       best_test_acc = test_acc
   
   return train_losses, test_losses
@@ -267,7 +249,7 @@ def batch_gd(model, criterion, optimizer, train_loader, test_loader, epochs):
 
 
 train_losses, test_losses = batch_gd(
-    denser_net,
+    haf,
     criterion,
     optimizer,
     train_loader,
