@@ -32,7 +32,8 @@ recall_topk = [1, 5, 10]
 result_dir = "result"
 
 def vgg16_netvlad(args, pretrained=False):
-    base_model = models.create('vgg16', pretrained=False)
+    base_model = models.create('vgg16', pretrained=False,
+        branch_1_dim=args.branch_1_dim, branch_m_dim=args.branch_m_dim, branch_h_dim=args.branch_h_dim)
     pool_layer = models.create('netvlad', dim=base_model.feature_dim)
     # model = models.create('embednetpca', base_model, pool_layer)
     model = models.create('embednet', base_model, pool_layer)
@@ -56,8 +57,14 @@ def main_worker(args):
     init_dist(args.launcher, args)
     synchronize()
 
+    print("Use GPU: {} for inference, rank no.{} of world_size {}"
+          .format(args.gpu, args.rank, args.world_size))
+
+    if (args.rank==0):
+        print("==========\nArgs:{}\n==========".format(args))
+
     if dist.get_rank() == 0:
-        print("inference on %s" % args.img_path)
+        print("inference on '%s'" % args.img_path)
         if os.path.exists(result_dir):
             os.system("rm -rf %s" % result_dir)
         os.mkdir(result_dir)
@@ -160,7 +167,7 @@ def main_worker(args):
                     os.mkdir(img_save_dir)
                 for result_img_path in result:
                     os.system("cp %s %s" %(osp.join(dataset.images_dir, result_img_path), img_save_dir))
-                print("top-%d images are saved under the %s" % (n, img_save_dir))
+                print("top-%d image%s saved under '%s'" % (n, "s are" if n > 1 else " is", img_save_dir))
 
         descriptor = descriptor.numpy()
     
@@ -191,6 +198,11 @@ if __name__ == '__main__':
     parser.add_argument('--nowhiten', action='store_true')
     parser.add_argument('--sync-gather', action='store_true')
     parser.add_argument('--features', type=int, default=4096)
+
+    parser.add_argument('--branch-1-dim', type=int, default=64)
+    parser.add_argument('--branch-m-dim', type=int, default=64)
+    parser.add_argument('--branch-h-dim', type=int, default=64)
+
     # training configs
     parser.add_argument('--resume', type=str, default='', metavar='PATH')
     parser.add_argument('--vlad', action='store_true')

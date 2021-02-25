@@ -56,7 +56,8 @@ def get_data(args):
     return dataset, pitts_train, train_extract_loader, test_loader_q, test_loader_db
 
 def get_model(args):
-    base_model = models.create(args.arch)
+    base_model = models.create(args.arch,
+        branch_1_dim=args.branch_1_dim, branch_m_dim=args.branch_m_dim, branch_h_dim=args.branch_h_dim)
     if args.vlad:
         pool_layer = models.create('netvlad', dim=base_model.feature_dim)
         model = models.create('embednet', base_model, pool_layer)
@@ -154,6 +155,11 @@ if __name__ == '__main__':
     parser.add_argument('--nowhiten', action='store_true')
     parser.add_argument('--sync-gather', action='store_true')
     parser.add_argument('--features', type=int, default=4096)
+
+    parser.add_argument('--branch-1-dim', type=int, default=64)
+    parser.add_argument('--branch-m-dim', type=int, default=64)
+    parser.add_argument('--branch-h-dim', type=int, default=64)
+    
     # training configs
     parser.add_argument('--resume', type=str, default='', metavar='PATH')
     parser.add_argument('--vlad', action='store_true')

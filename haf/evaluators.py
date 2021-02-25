@@ -188,7 +188,6 @@ class Evaluator(object):
             features = extract_features(self.model, query_loader, dataset,
                             vlad=vlad, pca=pca, gpu=gpu, sync_gather=sync_gather)
 
-        print(features)
         distmat, _, _ = pairwise_distance(features, query, gallery)
         recalls = evaluate_all(distmat, ground_truth, gallery, nms=nms)
         if (not rerank):

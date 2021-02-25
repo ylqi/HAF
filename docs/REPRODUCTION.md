@@ -8,7 +8,7 @@ In order to accomodate computation efficiency, we use small channel dimensions (
 bash train.sh
 ```
 
-The default scripts adopt `4` V100 GPUs (require ~32G per GPU) for training, where each GPU loads one tuple (anchor, positive(s), negatives).
+The default scripts adopt `4` Tesla V100 GPUs (require ~32G per GPU) for training, where each GPU loads one tuple (anchor, positive(s), negatives).
 + In case you want to fasten training, enlarge `GPUS` for more GPUs, or enlarge the `--tuple-size` for more tuples on one GPU;
 + In case your GPU does not have enough memory (e.g. <32G), reduce `--neg-num` for fewer positives or negatives in one tuple.
 
@@ -22,6 +22,6 @@ Run the test script with `<MODEL PATH>`, e.g. 'logs/saved_models/pitts30k-vgg16/
 bash test.sh <MODEL PATH>
 ```
 
-The default scripts adopt `4` V100 GPUs (require ~32G per GPU) for testing.
+The default scripts adopt `4` Tesla V100 GPUs (require ~32G per GPU) for testing.
 + In case you want to fasten training, enlarge `GPUS` for more GPUs, or enlarge the `--test-batch-size` for larger batch size on one GPU;
 + In case your GPU does not have enough memory (e.g. <32G), reduce `--test-batch-size` for smaller batch size on one GPU.

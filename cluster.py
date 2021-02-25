@@ -39,7 +39,8 @@ def get_data(args, nIm):
     return dataset, cluster_loader
 
 def get_model(args):
-    model = models.create(args.arch, cut_at_pooling=True, log_dir="logs")
+    model = models.create(args.arch, cut_at_pooling=True, log_dir="logs", 
+        branch_1_dim=args.branch_1_dim, branch_m_dim=args.branch_m_dim, branch_h_dim=args.branch_h_dim)
     model.cuda()
     model = nn.DataParallel(model)
     return model
@@ -134,6 +135,11 @@ if __name__ == '__main__':
     parser.add_argument('-a', '--arch', type=str, default='vgg16',
                         choices=models.names())
     parser.add_argument('--resume', type=str, default='', metavar='PATH')
+
+    parser.add_argument('--branch-1-dim', type=int, default=64)
+    parser.add_argument('--branch-m-dim', type=int, default=64)
+    parser.add_argument('--branch-h-dim', type=int, default=64)
+
     # path
     working_dir = osp.dirname(osp.abspath(__file__))
     parser.add_argument('--data-dir', type=str, metavar='PATH',

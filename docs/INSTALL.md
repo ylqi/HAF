@@ -101,7 +101,7 @@ python Feature_branch.py 384 256 512
 
 The original cluster centers provided by NetVLAD are highly **recommended**. You could directly download from [Google Drive](https://drive.google.com/drive/folders/1eOe8WOFi-X6aue2mbTcnj0A08bGBplVq?usp=sharing) and save it under the path of `logs/`.
 
-Or you could compute the centers by running the script
+Or you could compute the centers by running the script (if you change the channel dimensions):
 ```shell
 bash cluster.sh
 ```
