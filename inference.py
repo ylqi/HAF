@@ -62,7 +62,7 @@ def main_worker(args):
             os.system("rm -rf %s" % result_dir)
         os.mkdir(result_dir)
 
-    print("Loading model on GPU-%d" % args.gpu)
+    # print("Loading model on GPU-%d" % args.gpu)
     model =vgg16_netvlad(args, pretrained=True)
     # read image
     img = Image.open(args.img_path).convert('RGB')
@@ -134,7 +134,22 @@ def main_worker(args):
         db_ids = [db[1] for db in gallery]
         for qIx, pred in enumerate(sort_idx):
             pred = spatial_nms(pred.tolist(), db_ids, max(recall_topk)*12)
-            print(pred)
+
+            # # comput recall
+            # query_id = 
+            # correct_at_n = np.zeros(len(recall_topk))
+            # gt = dataset.test_pos
+            # for i, n in enumerate(recall_topk):
+            #     # if in top N then also in top NN, where NN > N
+            #     if np.any(np.in1d(pred[:n], gt[query_id])):
+            #         correct_at_n[i:] += 1
+            #         break
+            # recalls = correct_at_n / len(gt)
+            # print('Recall Scores:')
+            # for i, k in enumerate(recall_topk):
+            #     print('  top-{:<4}{:12.1%}'.format(k, recalls[i]))
+
+            # save images
             for i, n in enumerate(recall_topk):
                 # if in top N then also in top NN, where NN > N
                 result = np.array(gallery)[pred[:n]][:,0]
@@ -150,7 +165,7 @@ def main_worker(args):
         descriptor = descriptor.numpy()
     
         pd.DataFrame(descriptor).to_csv(os.path.join(result_dir, "descriptor.csv"))
-        print("Saved results on CSV")
+        print("Saved features on CSV")
     
     synchronize()
 
