@@ -1,8 +1,8 @@
 #!/bin/sh
 ARCH=vgg16 # $1
-L_DIM=64  # small-model: 64; middle-model: 128; large-model: 384
-M_DIM=64  # small-model: 64; middle-model: 128; large-model: 256
-H_DIM=64  # small-model: 64; middle-model: 128; large-model: 512
+L_DIM=128  # small-model: 64; middle-model: 128; large-model: 384
+M_DIM=128  # small-model: 64; middle-model: 128; large-model: 256
+H_DIM=128  # small-model: 64; middle-model: 128; large-model: 512
 
 # if [ $# -ne 1 ]
 #   then

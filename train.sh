@@ -8,11 +8,11 @@ ARCH=vgg16
 LAYERS=conv5
 LOSS=sare_ind
 LR=0.001
-WIDTH=640
-HEIGHT=480
-L_DIM=64  # small-model: 64; middle-model: 128; large-model: 384
-M_DIM=64  # small-model: 64; middle-model: 128; large-model: 256
-H_DIM=64  # small-model: 64; middle-model: 128; large-model: 512
+WIDTH=128  # 640
+HEIGHT=128 # 480
+L_DIM=128  # small-model: 64; middle-model: 128; large-model: 384
+M_DIM=128  # small-model: 64; middle-model: 128; large-model: 256
+H_DIM=128  # small-model: 64; middle-model: 128; large-model: 512
 
 while true # find unused tcp port
 do

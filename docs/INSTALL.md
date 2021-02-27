@@ -86,14 +86,11 @@ Our VGG16-based feature extraction layers is pretrained on [Architecture dataset
 Or you can train the feature branch by running the `Feature_branch.py` (You should download the [Architecture dataset](https://www.kaggle.com/wwymak/architecture-dataset) and put them under the path of `Arch_test` and `Arch_train`):
 ```shell
 # for small model (for one V100 GPU)
-python Feature_branch.py 64 64 64
-
-# for middle model (for both efficiency and performance)
-python Feature_branch.py 128 128 128
-
-# for large model (the proposed one in paper)
-python Feature_branch.py 384 256 512
+bash run_Feature_branch.sh
 ```
+
+**Note:** the models and results here are trained by this repo. In order to accomodate computation efficiency, we use small channel dimensions (64*3) and feature sizes of 128/2 X 128/2. We encourage you to change the channel dimensions (`L_DIM`, `M_DIM`, `H_DIM`) in `run_Feature_branch.sh` to increase the performance.
+
 
 **(2) initial cluster centers for VLAD layer**
 
@@ -101,7 +98,7 @@ python Feature_branch.py 384 256 512
 
 The original cluster centers provided by NetVLAD are highly **recommended**. You could directly download from [Google Drive](https://drive.google.com/drive/folders/1eOe8WOFi-X6aue2mbTcnj0A08bGBplVq?usp=sharing) and save it under the path of `logs/`.
 
-Or you could compute the centers by running the script (if you change the channel dimensions):
+Or you could compute the centers by running the script (if you change the channel dimensions, you must recompute the centers):
 ```shell
 bash cluster.sh
 ```
