@@ -76,7 +76,7 @@ logs
 ├── haf_vgg16_conv_1_dim-[64/128/384].pth # refer to (1)
 ├── haf_vgg16_conv_m_dim-[64/128/256].pth # refer to (1)
 ├── haf_vgg16_conv_h_dim-[64/128/512].pth # refer to (1)
-└── vgg16_pitts_64_desc_cen.hdf5 # refer to (2)
+└── vgg16_pitts_64_desc_cen_[64/128/384]_[64/128/256]_[64/128/512].hdf5 # refer to (2)
 ```
 
 **(1) Architecture-pretrained weights for VGG16 backbone**

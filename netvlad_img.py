@@ -89,7 +89,7 @@ def get_model(args):
     base_model = models.create(args.arch, log_dir="logs", branch_1_dim=args.branch_1_dim, branch_m_dim=args.branch_m_dim, branch_h_dim=args.branch_h_dim)
     if args.vlad:
         pool_layer = models.create('netvlad', dim=base_model.feature_dim)
-        initcache = osp.join(args.init_dir, args.arch + '_' + args.dataset + '_' + str(args.num_clusters) + '_desc_cen.hdf5')
+        initcache = osp.join(args.init_dir, args.arch + '_' + args.dataset + '_' + str(args.num_clusters) + '_desc_cen_%d_%d_%d.hdf5' % (args.branch_1_dim, args.branch_m_dim, args.branch_h_dim))
         if (dist.get_rank()==0):
             print ('Loading centroids from {}'.format(initcache))
         with h5py.File(initcache, mode='r') as h5:

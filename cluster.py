@@ -82,7 +82,7 @@ def main_worker(args):
     if not osp.exists(osp.join(args.logs_dir)):
         os.makedirs(osp.join(args.logs_dir))
 
-    initcache = osp.join(args.logs_dir, args.arch + '_' + args.dataset + '_' + str(args.num_clusters) + '_desc_cen.hdf5')
+    initcache = osp.join(args.logs_dir, args.arch + '_' + args.dataset + '_' + str(args.num_clusters) + '_desc_cen_%d_%d_%d.hdf5' % (args.branch_1_dim, args.branch_m_dim, args.branch_h_dim))
     with h5py.File(initcache, mode='w') as h5:
         with torch.no_grad():
             model.eval()
