@@ -96,7 +96,7 @@ bash run_Feature_branch.sh
 
 **Note:** it is important as the VLAD layer cannot work with random initialization.
 
-The original cluster centers provided by NetVLAD are highly **recommended**. You could directly download from [Google Drive](https://drive.google.com/drive/folders/1eOe8WOFi-X6aue2mbTcnj0A08bGBplVq?usp=sharing) and save it under the path of `logs/`.
+The original cluster centers provided by NetVLAD are highly **recommended**. You could directly download from [Google Drive](https://drive.google.com/drive/folders/199-h3_FoZWMM_bXzrK01SC6pgoixuMUQ?usp=sharing) and save it under the path of `logs/`.
 
 Or you could compute the centers by running the script (if you change the channel dimensions, you must recompute the centers):
 ```shell
