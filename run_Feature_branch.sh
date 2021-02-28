@@ -19,4 +19,4 @@ done
 
 CUDA_VISIBLE_DEVICES=0,1,2,3 $PYTHON -m torch.distributed.launch --nproc_per_node=$GPUS --master_port=$PORT --use_env \
     Feature_branch.py --launcher pytorch \
-    --branch-1-dim ${L_DIM} --branch-m-dim ${L_DIM} --branch-h-dim ${H_DIM} 
+    --branch-1-dim ${L_DIM} --branch-m-dim ${M_DIM} --branch-h-dim ${H_DIM} 

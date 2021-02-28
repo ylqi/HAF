@@ -37,7 +37,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 $PYTHON -m torch.distributed.launch --nproc_per_nod
 netvlad_img.py --launcher pytorch --tcp-port ${PORT} \
   -d ${DATASET} --scale ${SCALE} \
   -a ${ARCH} --layers ${LAYERS} --vlad --syncbn --sync-gather \
-  --branch-1-dim ${L_DIM} --branch-m-dim ${L_DIM} --branch-h-dim ${H_DIM} \
+  --branch-1-dim ${L_DIM} --branch-m-dim ${M_DIM} --branch-h-dim ${H_DIM} \
   --width ${WIDTH} --height ${HEIGHT} --tuple-size 1 -j 8 --neg-num 4 --test-batch-size 4 \
   --margin 0.1 --lr ${LR} --weight-decay 0.001 --loss-type ${LOSS} \
   --eval-step 1 --epochs 5 --step-size 5 --cache-size 1000 \
